@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// defines new blueprint for a user
 const UserSchema = new mongoose.Schema({
 
     username: {
@@ -18,5 +19,6 @@ const UserSchema = new mongoose.Schema({
     }
 })
 
+// creates a model of blueprint
 const UserModel = mongoose.model("users", UserSchema);
-export {UserModel};
+export { UserModel };

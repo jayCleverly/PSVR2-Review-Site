@@ -13,15 +13,13 @@ router.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
     // checks to see if entered details match an existing account
-    const userExists = await UserModel.findOne({$and:
-        [
-            {"username": username}
-        ] 
-    });
+    const userExists = await UserModel.findOne(
+        {"username": username}
+    );
 
     // a user does not exist with matching information
     if (!userExists) {
-        res.json({message: "NO ACCOUNT WITH MATCHING INFORMATION!"});
+        res.json({message: "NO ACCOUNT WITH MATCHING USERNAME!"});
 
     // a user does exist with matching information
     } else {
@@ -30,7 +28,7 @@ router.post("/login", async (req, res) => {
 
         // entered password does not match
         if (!passwordValid) {
-            res.json({message: "INCORRECT DETAILS ENTERED!"});
+            res.json({message: "INCORRECT PASSWORD ENTERED!"});
 
         // entered password does match
         } else {
