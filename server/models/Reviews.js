@@ -3,6 +3,10 @@ import mongoose from "mongoose";
 // defines new blueprint for a review
 const ReviewSchema = new mongoose.Schema({
 
+    authorId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
     author: {
         type: String,
         required: true
@@ -30,6 +34,9 @@ const ReviewSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    likes: {
+        type: Number
+    }
 })
 
 // creates a model of blueprint

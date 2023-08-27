@@ -87,4 +87,11 @@ router.post("/sign-up", async (req, res) => {
     }
 });
 
+
+router.post("/logout", async (req, res) => {
+    res.clearCookie("token");
+    res.json({message: "SUCCESSFULLY LOGGED OUT!"})
+});
+
+
 export {router as authRouter};
