@@ -33,8 +33,13 @@ router.post("/login", async (req, res) => {
         // entered password does match
         } else {
             // creates token so browser remembers user is logged in
-            const token = jwt.sign({username: username}, "secretKey");
-            res.json({message: "LOGGED IN!", token, username: username})
+            const token = jwt.sign({id: userExists._id}, "secretKey");
+            // sends token to users browser
+            res.cookie("token", token, {
+                httpOnly: true,
+            });
+
+            res.json({message: "LOGGED IN!"})
         }
     }
 });
@@ -70,9 +75,15 @@ router.post("/sign-up", async (req, res) => {
 
         // saves user to database
         await newUser.save();
+
         // creates token so browser remembers user is logged in
-        const token = jwt.sign({username: username}, "secretKey");
-        res.json({message: "ACCOUNT CREATED!", token, username: username})
+        const token = jwt.sign({id: newUser._id}, "secretKey");
+        // sends token to users browser
+        res.cookie("token", token, {
+            httpOnly: true,
+        });
+        
+        res.json({message: "ACCOUNT CREATED!"})
     }
 });
 
