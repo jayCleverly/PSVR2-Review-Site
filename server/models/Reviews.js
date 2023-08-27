@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 // defines new blueprint for a review
 const ReviewSchema = new mongoose.Schema({
@@ -12,7 +12,7 @@ const ReviewSchema = new mongoose.Schema({
         required: true
     },
     date: {
-        type: String,
+        type: Date,
         required: true
     },
     title: {

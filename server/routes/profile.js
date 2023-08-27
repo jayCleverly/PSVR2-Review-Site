@@ -7,16 +7,16 @@ const router = express.Router();
 
 
 // view all created reviews and basic profile info
-router.get("/", async (req, res) => {
+router.get("/view-:username", async (req, res) => {
 
-    // gets current user logged in
+    // gets user
     const user = await UserModel.findOne(
-        {"_id": req.user.id}
+        {"username": req.params.username}
     )
 
     // finds all reviews current user has created
     const existingReviews = await ReviewModel.find(
-        {"authorId": req.user.id}
+        {"authorId": user._id}
     )
     // sends these reviews to frontend
     res.json({username: user.username, reviews: existingReviews});
@@ -43,16 +43,12 @@ router.get("/create-review", async (req, res) => {
         const user = await UserModel.findOne(
             {"_id": req.user.id},
         );
-
-        // formats data to be more understandable
-        var date = new Date();
-        var date = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
         
         // creates new review
         const newReview = new ReviewModel({
             authorId: user.id,
             author: user.username,
-            date: date,
+            date: new Date(),
             title: title,
             game: game,
             rating: rating,
