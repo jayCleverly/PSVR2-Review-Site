@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 // defines new blueprint for a review
 const ReviewSchema = new mongoose.Schema({
@@ -24,6 +24,11 @@ const ReviewSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    genre: {
+        type: String,
+        required: true,
+        enum: ["racing", "shooter", "sports", "horror", "adventure", "action", "casual", "role-play"]
+    },
     rating: {
         type: Number,
         required: true,
@@ -33,9 +38,6 @@ const ReviewSchema = new mongoose.Schema({
     text: {
         type: String,
         required: true
-    },
-    likes: {
-        type: Number
     }
 })
 

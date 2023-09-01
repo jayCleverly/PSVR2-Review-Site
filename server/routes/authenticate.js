@@ -9,6 +9,7 @@ const router = express.Router();
 
 // login to account
 router.post("/login", async (req, res) => {
+
     // gets data entered by user
     const { username, password } = req.body;
 
@@ -35,9 +36,7 @@ router.post("/login", async (req, res) => {
             // creates token so browser remembers user is logged in
             const token = jwt.sign({id: userExists._id}, "secretKey");
             // sends token to users browser
-            res.cookie("token", token, {
-                httpOnly: true,
-            });
+            res.cookie("token", token, {httpOnly: true});
 
             res.json({message: "LOGGED IN!"})
         }
@@ -47,6 +46,7 @@ router.post("/login", async (req, res) => {
 
 // create new account 
 router.post("/sign-up", async (req, res) => {
+
     // gets data entered by user
     const { username, email, password } = req.body;
 
@@ -79,18 +79,10 @@ router.post("/sign-up", async (req, res) => {
         // creates token so browser remembers user is logged in
         const token = jwt.sign({id: newUser._id}, "secretKey");
         // sends token to users browser
-        res.cookie("token", token, {
-            httpOnly: true,
-        });
+        res.cookie("token", token, {httpOnly: true});
         
         res.json({message: "ACCOUNT CREATED!"})
     }
-});
-
-
-router.post("/logout", async (req, res) => {
-    res.clearCookie("token");
-    res.json({message: "SUCCESSFULLY LOGGED OUT!"})
 });
 
 

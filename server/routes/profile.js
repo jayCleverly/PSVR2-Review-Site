@@ -9,24 +9,20 @@ const router = express.Router();
 // view all created reviews and basic profile info
 router.get("/view-:username", async (req, res) => {
 
-    // gets user
-    const user = await UserModel.findOne(
-        {"username": req.params.username}
-    )
-
-    // finds all reviews current user has created
+    // finds all reviews selected user has created
     const existingReviews = await ReviewModel.find(
-        {"authorId": user._id}
+        {"author": req.params.username}
     )
     // sends these reviews to frontend
-    res.json({username: user.username, reviews: existingReviews});
+    res.json({username: req.params.username, reviews: existingReviews});
 })
 
 
 // create review
 router.get("/create-review", async (req, res) => {
+
     // gets data entered by user
-    const { title, game, rating, text } = req.body;
+    const { title, game, genre, rating, text } = req.body;
 
     // checks to see if review with matching title exists
     const reviewExists = await ReviewModel.findOne(
@@ -51,9 +47,9 @@ router.get("/create-review", async (req, res) => {
             date: new Date(),
             title: title,
             game: game,
+            genre: genre,
             rating: rating,
             text: text,
-            likes: 0
         });
 
         // saves review to database
@@ -65,6 +61,7 @@ router.get("/create-review", async (req, res) => {
 
 // delete review
 router.get("/delete-review", async (req, res) => {
+
     // deletes review that user has chosen and checks correct user has chosen to delete
     try {
         await ReviewModel.findOneAndRemove({$and:
@@ -79,6 +76,14 @@ router.get("/delete-review", async (req, res) => {
     } catch (err) {
         res.json({message: "ERROR!"})
     }
+});
+
+
+// logs user out of current session
+router.post("/logout", async (req, res) => {
+
+    res.clearCookie("token");
+    res.json({message: "SUCCESSFULLY LOGGED OUT!"})
 });
 
 

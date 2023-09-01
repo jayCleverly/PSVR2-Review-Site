@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 
 
 const cookieJwtAuth = (req, res, next) => {
+
     // gets token from browser
     const token = req.cookies.token;
 
@@ -17,5 +18,6 @@ const cookieJwtAuth = (req, res, next) => {
         res.clearCookie("token");
     }
 }
+
 
 export { cookieJwtAuth };
