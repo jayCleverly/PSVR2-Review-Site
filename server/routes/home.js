@@ -1,7 +1,6 @@
 import express from "express";
 
 import { ReviewModel } from "../models/Reviews.js";
-import { UserModel } from "../models/Users.js";
 
 const router = express.Router();
 
@@ -9,20 +8,16 @@ const router = express.Router();
 // view a selection of reviews
 router.get("/", async (req, res) => {
 
-    var userSortChoice = req.body.sortBy;
-    // user has not selected to sort reviews by a specific value
-    if (userSortChoice == null) {
-        userSortChoice = "date";
-    }
+    const reviewGenre = req.cookies.reviewGenre; // game genre the user wants to view reviews for
 
     var reviews = [];
     // the user has asked to see specific reviews
-    if (req.cookies.reviews != null) {
-        reviews = await ReviewModel.find({"_id": {$in: req.cookies.reviews}}).sort("-" + userSortChoice);
+    if (reviewGenre != null && reviewGenre != "all") {
+        reviews = await ReviewModel.find({"genre": reviewGenre}).sort({date: -1});;
 
     // the user has not asked to see specific reviews
-    } else {
-        reviews = await ReviewModel.find({}).sort("-" + userSortChoice);
+    } else if (reviewGenre == null || reviewGenre == "all") {
+        reviews = await ReviewModel.find({}).sort({date: -1});;
     }
 
     res.json(reviews);
@@ -34,25 +29,8 @@ router.get("/search", async (req, res) => {
 
     // user has entered a value for the genre they want to view
     if (req.body.genre != null) {
-        var reviewQuery;
-
-        // user wants to go back to viewing all reviews
-        if (req.body.genre == "all") {
-            reviewQuery = await ReviewModel.find({}, "_id");
-
-        // user wants to view reviews for a specific genre
-        } else {
-            reviewQuery = await ReviewModel.find({"genre": req.body.genre}, "_id");
-        }
-
-        // formats query results into array
-        var idList = [];
-        for (var review of reviewQuery) { 
-            idList.push(review._id);
-        };
-
         // sends token to users browser
-        res.cookie("reviews", idList, {httpOnly: true});
+        res.cookie("reviewGenre", req.body.genre, {httpOnly: true});
         res.redirect("/");
     
     // user has not entered value for genre
