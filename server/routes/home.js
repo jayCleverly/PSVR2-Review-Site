@@ -7,7 +7,7 @@ const router = express.Router();
 
 // view a selection of reviews
 router.get("/", async (req, res) => {
-
+    
     const reviewGenre = req.cookies.reviewGenre; // game genre the user wants to view reviews for
 
     var reviews = [];
@@ -25,23 +25,16 @@ router.get("/", async (req, res) => {
 
 
 // select all reviews with a particular genre
-router.get("/search", async (req, res) => {
+router.post("/filter", async (req, res) => {
 
-    // user has entered a value for the genre they want to view
-    if (req.body.genre != null) {
-        // sends token to users browser
-        res.cookie("reviewGenre", req.body.genre, {httpOnly: true});
-        res.redirect("/");
-    
-    // user has not entered value for genre
-    } else {
-        res.json({});
-    }
+    // sends token to users browser
+    res.cookie("reviewGenre", req.body.genre, {httpOnly: false});
+    res.json();
 })
 
 
 // view selected review, allowing user to read in more detail
-router.get("/view-:review", async (req, res) => {
+router.get("/view/:review", async (req, res) => {
 
     // gets review
     const review = await ReviewModel.findOne(

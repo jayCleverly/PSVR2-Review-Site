@@ -7,54 +7,60 @@ const router = express.Router();
 
 
 // view all created reviews and basic profile info
-router.get("/view-:username", async (req, res) => {
+router.get("/view/:username", async (req, res) => {
 
     // finds all reviews selected user has created
     const existingReviews = await ReviewModel.find(
         {"author": req.params.username}
     )
     // sends these reviews to frontend
-    res.json({username: req.params.username, reviews: existingReviews});
+    res.json(existingReviews);
 })
 
 
 // create review
-router.get("/create-review", async (req, res) => {
+router.post("/create-review", async (req, res) => {
 
     // gets data entered by user
     const { title, game, genre, rating, text } = req.body;
 
-    // checks to see if review with matching title exists
-    const reviewExists = await ReviewModel.findOne(
-        {"title": title}
-    );
-
-    // review with matching title exists
-    if (reviewExists) {
-        res.json({message: "A REVIEW WITH THIS TITLE ALREADY EXISTS!"});
-
-    // review with title entered does not exist
-    } else {
-        // finds user that is currently logged in
-        const user = await UserModel.findOne(
-            {"_id": req.user.id},
+    // makes sure user has entered all fields
+    if (title != "" && game != "" && genre != "" && rating != "" && text != "") {
+        // checks to see if review with matching title exists
+        const reviewExists = await ReviewModel.findOne(
+            {"title": title}
         );
-        
-        // creates new review
-        const newReview = new ReviewModel({
-            authorId: user.id,
-            author: user.username,
-            date: new Date(),
-            title: title,
-            game: game,
-            genre: genre,
-            rating: rating,
-            text: text,
-        });
 
-        // saves review to database
-        await newReview.save();
-        res.json({message: "SUCCESSFULLY CREATED REVIEW!"})
+        // review with matching title does not exist
+        if (!reviewExists) {
+            // finds user that is currently logged in
+            const user = await UserModel.findOne(
+                {"_id": req.user.id},
+            );
+            
+            // creates new review
+            const newReview = new ReviewModel({
+                authorId: user.id,
+                author: user.username,
+                date: new Date(),
+                title: title,
+                game: game,
+                genre: genre,
+                rating: rating,
+                text: text,
+            });
+
+            // saves review to database
+            await newReview.save();
+            res.json({message: "SUCCESSFULLY CREATED REVIEW!"})
+
+        // review with title entered does exist
+        } else {
+            res.json({message: "A REVIEW WITH THIS TITLE ALREADY EXISTS!"});
+        }
+
+    } else {
+        res.json({message: "MISSING DETAILS!"})
     }
 });
 

@@ -18,28 +18,28 @@ router.post("/login", async (req, res) => {
         {"username": username}
     );
 
-    // a user does not exist with matching information
-    if (!userExists) {
-        res.json({message: "NO ACCOUNT WITH MATCHING USERNAME!"});
-
     // a user does exist with matching information
-    } else {
+    if (userExists) {
         // compares password entered to stored password
         const passwordValid = await bcrypt.compare(password, userExists.password);
 
-        // entered password does not match
-        if (!passwordValid) {
-            res.json({message: "INCORRECT PASSWORD ENTERED!"});
-
         // entered password does match
-        } else {
+        if (!passwordValid) {
             // creates token so browser remembers user is logged in
             const token = jwt.sign({id: userExists._id}, "secretKey");
             // sends token to users browser
-            res.cookie("token", token, {httpOnly: true});
+            res.cookie("token", token, {httpOnly: false});
 
             res.json({message: "LOGGED IN!"})
+
+        // entered password does not match
+        } else {
+            res.json({message: "INCORRECT PASSWORD ENTERED!"});
         }
+
+    // a user does not exist with matching information
+    } else {
+        res.json({message: "INCORRECT DETAILS!"});
     }
 });
 
@@ -49,40 +49,47 @@ router.post("/sign-up", async (req, res) => {
 
     // gets data entered by user
     const { username, email, password } = req.body;
-
-    // checks to see if entered details match an existing account
-    const userExists = await UserModel.findOne({$or:
-        [
-            {"username": username},
-            {"email": email}
-        ] 
-    });
-
-    // a user does exist with matching information
-    if (userExists) {
-        res.json({message: "ACCOUNT ALREADY EXISTS WITH THIS INFORMATION!"});
-
-    // a user does not exist with matching information
-    } else {
-        // hashes password
-        const hashedPassword = await bcrypt.hash(password, 12);
-        // creates new user model with entered information
-        const newUser = new UserModel({
-            username: username,
-            email: email,
-            password: hashedPassword
+    
+    // makes sure user has entered all details
+    if (username != "" && email != "" && password != "") {
+        // checks to see if entered details match an existing account
+        const userExists = await UserModel.findOne({$or:
+            [
+                {"username": username},
+                {"email": email}
+            ] 
         });
 
-        // saves user to database
-        await newUser.save();
+        // a user does not exist with matching information
+        if (!userExists) {
+            // hashes password
+            const hashedPassword = await bcrypt.hash(password, 12);
+            // creates new user model with entered information
+            const newUser = new UserModel({
+                username: username,
+                email: email,
+                password: hashedPassword
+            });
 
-        // creates token so browser remembers user is logged in
-        const token = jwt.sign({id: newUser._id}, "secretKey");
-        // sends token to users browser
-        res.cookie("token", token, {httpOnly: true});
-        
-        res.json({message: "ACCOUNT CREATED!"})
+            // saves user to database
+            await newUser.save();
+
+            // creates token so browser remembers user is logged in
+            const token = jwt.sign({id: newUser._id}, "secretKey");
+            // sends token to users browser
+            res.cookie("token", token, {httpOnly: false});
+            
+            res.json({message: "ACCOUNT CREATED!"})
+
+        // a user does exist with matching information
+        } else {
+            res.json({message: "ACCOUNT ALREADY EXISTS WITH THIS INFORMATION!"});
+        }
+
+    } else {
+        res.json({message: "MISSING DETAILS!"})
     }
+
 });
 
 

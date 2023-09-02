@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import { cookieJwtAuth } from "./middleware/cookieJwtAuth.js";
 import { homeRouter } from "./routes/home.js";
@@ -13,6 +14,10 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({
+    origin: true,
+    credentials: true
+}));
 
 // sets up routes to use
 app.use("/", homeRouter);
