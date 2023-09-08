@@ -18,7 +18,7 @@ function ViewReview() {
 
     // gets review title that has been chosen
     const reviewTitle  = useParams();
-    const [review, setReview] = useState();
+    const [review, setReview] = useState({});
 
     // api call to load information about selected review
     useEffect(() => {
