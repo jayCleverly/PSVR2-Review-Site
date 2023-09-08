@@ -18,9 +18,10 @@ router.get("/", async (req, res) => {
     // the user has not asked to see specific reviews
     } else if (reviewGenre == null || reviewGenre == "all") {
         reviews = await ReviewModel.find({}).sort({date: -1});;
+        if (reviewGenre != "all") { reviewGenre = "all" }; // makes sure genre is set to a value
     }
 
-    res.json(reviews);
+    res.json({"reviews":reviews, "genre":reviewGenre});
 })
 
 
