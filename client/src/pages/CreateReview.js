@@ -24,9 +24,9 @@ function CreateReview() {
         axios.post("http://localhost:3001/profile/create-review", {title, game, genre, rating, text}).then((response) => {
           alert(response.data.message);
           
-          // makes sure everything is correct
+          // makes sure everything is correct and sends user back to profile
           if (response.data.message == "SUCCESSFULLY CREATED REVIEW!") {
-            window.location.href = "http://localhost:3000/";
+            window.location.href = "http://localhost:3000/profile/view/" + response.data.profile;
           }
         })
     }

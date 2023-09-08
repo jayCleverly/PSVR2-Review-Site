@@ -34,7 +34,7 @@ function Login() {
             onChange={(event) => setUsername(event.target.value)} required></input>
           <input type="text" placeholder="Password.." 
             onChange={(event) => setPassword(event.target.value)} required></input>
-          <button onClick={login}>Login</button>
+          <button onClick={() => login()}>Login</button>
         </MainLayout>
     );
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 
@@ -11,6 +12,17 @@ import { Link } from "react-router-dom";
 // a reusable navigation system with links to important parts of the site
 function Navbar() {
 
+    const logout = () => {
+        axios.post("http://localhost:3001/profile/logout").then((response) => {
+          alert(response.data.message);
+
+          // user has been logged out successfully
+          if (response.data.message == "SUCCESSFULLY LOGGED OUT!") {
+            window.location.href = "http://localhost:3000/";
+          }
+        })
+    }
+
     return (
         <div className="navbar">
             <div className="navbar-logo">
@@ -21,8 +33,10 @@ function Navbar() {
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/authenticate/login">Login</Link></li>
                 <li><Link to="/authenticate/sign-up">Sign Up</Link></li>
-                <li><Link to="/profile/logout">Logout</Link></li>
-                <li><Link to="/profile/view/Jay">Profile</Link></li>
+                <li onClick={logout}>
+                    <a href="/#" onClick={logout}>Logout</a>
+                </li>
+                <li><Link to="/profile/view/64eb790f3d43d41914ccef3e">Profile</Link></li>
             </ul>
         </div>
     )

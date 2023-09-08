@@ -7,14 +7,26 @@ const router = express.Router();
 
 
 // view all created reviews and basic profile info
-router.get("/view/:username", async (req, res) => {
+router.get("/view/:userId", async (req, res) => {
 
-    // finds all reviews selected user has created
-    const existingReviews = await ReviewModel.find(
-        {"author": req.params.username}
-    )
+    var userReviews = []; // intialises empty review collection
+    var author = {};
+
+    // makes sure user is logged in before using resources
+    if (req.user != undefined) {
+
+        // finds all reviews selected user has created
+        userReviews = await ReviewModel.find(
+            {"authorId": req.params.userId}
+        );
+        // finds user associated with reviews
+        author = await UserModel.findOne(
+            {"_id": req.params.userId}
+        );
+    }
+
     // sends these reviews to frontend
-    res.json(existingReviews);
+    res.json({"reviews": userReviews, "currentUser": req.user, "author": author});
 })
 
 
@@ -52,7 +64,7 @@ router.post("/create-review", async (req, res) => {
 
             // saves review to database
             await newReview.save();
-            res.json({message: "SUCCESSFULLY CREATED REVIEW!"})
+            res.json({message: "SUCCESSFULLY CREATED REVIEW!", profile: user.id})
 
         // review with title entered does exist
         } else {
@@ -66,16 +78,13 @@ router.post("/create-review", async (req, res) => {
 
 
 // delete review
-router.get("/delete-review", async (req, res) => {
+router.post("/delete-review", async (req, res) => {
 
     // deletes review that user has chosen and checks correct user has chosen to delete
     try {
-        await ReviewModel.findOneAndRemove({$and:
-            [
-                {"title": req.body.title},
-                {"authorId": req.user.id}
-            ] 
-        })
+        await ReviewModel.findOneAndRemove(
+            {"_id": req.body.reviewId}
+        )
         res.json({message: "SUCCESSFULLY DELETED REVIEW!"})
 
     // user does not have permission to delete review

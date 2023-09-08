@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 
 
+// middleware designed to check if a user is authenticated
 const cookieJwtAuth = (req, res, next) => {
 
     // gets token from browser
@@ -16,6 +17,7 @@ const cookieJwtAuth = (req, res, next) => {
     } catch (err) {
         // gets rid of token as it is not correct
         res.clearCookie("token");
+        next();
     }
 }
 

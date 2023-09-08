@@ -58,7 +58,7 @@ function Home() {
               return (
                 <div>
                   <h1><Link to={"/view/" + review._id}>{review.title}</Link></h1>
-                  <h1>Author: {review.author}, {review.date}</h1>
+                  <h1>Author: <Link to={"/profile/view/" + review.authorId}>{review.author}</Link>, {review.date}</h1>
                   <h1>{review.game}, Rating: {review.rating} / 5</h1>
                   <br></br>
                 </div>

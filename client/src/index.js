@@ -30,7 +30,7 @@ const router = createBrowserRouter([
     element: <Login/>,
   },
   {
-    path: "/profile/view/:username",
+    path: "/profile/view/:userId",
     element: <ViewProfile/>,
   },
   {

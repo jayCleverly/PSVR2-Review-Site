@@ -37,7 +37,7 @@ function SignUp() {
             onChange={(event) => setEmail(event.target.value)} required></input>
           <input type="text" placeholder="Password.." 
             onChange={(event) => setPassword(event.target.value)} required></input>
-          <button onClick={signUp}>Sign Up</button>
+          <button onClick={() => signUp()}>Sign Up</button>
         </MainLayout>
     );
 }
