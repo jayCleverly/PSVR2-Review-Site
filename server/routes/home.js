@@ -35,15 +35,22 @@ router.post("/filter", async (req, res) => {
 
 
 // view selected review, allowing user to read in more detail
-router.get("/view/:review", async (req, res) => {
+router.post("/view/:reviewId", async (req, res) => {
+
+    var message = "SUCCESS!"; // used to determine if review has been found successfully
 
     // gets review
     const review = await ReviewModel.findOne(
-        {"title": req.params.review}
+        {"_id": req.params.reviewId}
+
+    // review does not exist
+    ).catch((error) => {
+        message = "REVIEW DOES NOT EXIST!"
+        }
     );
 
     // sends review data to frontend
-    res.json(review);
+    res.json({review, message});
 })
 
 

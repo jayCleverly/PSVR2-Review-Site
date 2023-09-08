@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     element: <Home/>,
   },
   {
-    path: "/view/:review",
+    path: "/view/:reviewId",
     element: <ViewReview/>,
   },
   {
