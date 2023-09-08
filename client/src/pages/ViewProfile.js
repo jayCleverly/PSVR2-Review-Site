@@ -33,6 +33,18 @@ function ViewProfile() {
       })
     }, [])
 
+    // api call allowing a user to logout of their profile
+    const logout = () => {
+      axios.post("http://localhost:3001/profile/logout").then((response) => {
+        alert(response.data.message);
+
+        // user has been logged out successfully
+        if (response.data.message == "SUCCESSFULLY LOGGED OUT!") {
+          window.location.href = "http://localhost:3000/";
+        }
+      })
+    }
+
     // api call to run backend logic for deleting a review
     const deleteReview = (reviewId) => {
       axios.post("http://localhost:3001/profile/delete-review", {reviewId}).then((response) => {
@@ -49,36 +61,44 @@ function ViewProfile() {
     return (
         <MainLayout>
           
-          {currentUser.id != undefined &&
-            <div>
-              <br></br>
-              <h1><u>{author.username}'s Reviews</u></h1>
-              <br></br>
-
-              <div className="reviews">
-                  {reviews.map((review) => {
-                    return (
-                      <div>
-                        <h1><Link to={"/view/" + review._id}>{review.title}</Link>, {review.date}</h1>
-                        <h1>{review.game}, Rating: {review.rating} / 5</h1>
-                        
-                        {currentUser.id == author._id &&
-                          <button onClick={() => deleteReview(review._id)}>Delete</button>
-                        }
-                        <br></br>
-                      </div>
-                    );
-                  })}
+          {currentUser.id != undefined && // makes sure user is logged in
+            <>
+              <div>
+                {currentUser.id == author._id && // user and author are the same
+                  <button onClick={() => logout()}>Logout</button>
+                }
               </div>
-            </div>
-          }
 
-          {currentUser.id == author._id && // checks to see if user logged in and author are same
-            <div>
-              <br></br>
-              <br></br>
-              <Link to={"/profile/create-review"}>Create Review</Link>
-            </div>
+              <div>
+                <br></br>
+                <h1><u>{author.username}'s Reviews</u></h1>
+                <br></br>
+
+                <div className="reviews">
+                    {reviews.map((review) => {
+                      return (
+                        <div>
+                          <h1><Link to={"/view/" + review._id}>{review.title}</Link>, {review.date}</h1>
+                          <h1>{review.game}, Rating: {review.rating} / 5</h1>
+                          
+                          {currentUser.id == author._id &&
+                            <button onClick={() => deleteReview(review._id)}>Delete</button>
+                          }
+                          <br></br>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
+
+              {currentUser.id == author._id && // checks to see if user logged in and author are same
+                <div>
+                  <br></br>
+                  <br></br>
+                  <Link to={"/profile/create-review"}>Create Review</Link>
+                </div>
+              }
+            </>
           }
 
         </MainLayout>
