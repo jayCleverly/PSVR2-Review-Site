@@ -9,22 +9,16 @@ const router = express.Router();
 // view all created reviews and basic profile info
 router.get("/view/:userId", async (req, res) => {
 
-    var userReviews = []; // intialises empty review collection
-    var author = {};
+    // finds user associated with profile selected
+    const author = await UserModel.findOne(
+        {"_id": req.params.userId}
+    ).catch((error) => {});  
 
-    // makes sure user is logged in before using resources
-    if (req.user != undefined) {
+    // finds all reviews selected user has created
+    const userReviews = await ReviewModel.find(
+        {"authorId": req.params.userId}
+    ).catch((error) => {});
 
-        // finds all reviews selected user has created
-        userReviews = await ReviewModel.find(
-            {"authorId": req.params.userId}
-        ).catch((error) => {});
-        
-        // finds user associated with reviews
-        author = await UserModel.findOne(
-            {"_id": req.params.userId}
-        ).catch((error) => {});        
-    }
     // sends these reviews to frontend
     res.json({"reviews": userReviews, "currentUser": req.user, "author": author});
 })

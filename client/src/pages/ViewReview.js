@@ -1,7 +1,6 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams,  } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 
 
@@ -12,6 +11,7 @@ function ViewReview() {
     const reviewId  = useParams(0);
     const [review, setReview] = useState({});
 
+    
     // api call to load information about selected review
     useEffect(() => {
       axios.post("http://localhost:3001/view/" + reviewId.reviewId).then((response) => {
@@ -22,8 +22,8 @@ function ViewReview() {
 
       // review does not exist with entered id
       } else {
-        alert(response.data.message);
         window.location.href = "http://localhost:3000/";
+        alert(response.data.message);
       }
       })
     }, [])
@@ -34,8 +34,8 @@ function ViewReview() {
           {typeof(review.title) == "string" && // checks that loaded review is not empty object
             <div>
               <br></br>
-              <h1>{review.title}</h1>
-              <h1>Author: {review.author}, {review.date}</h1>
+              <h1><u>{review.title}</u></h1>
+              <h1>Author: <Link to={"/profile/view/" + review.authorId}>{review.author}</Link>, {review.date}</h1>
               <h1>{review.game}, Rating: {review.rating} / 5</h1>
               <p>{review.text}</p>
               <br></br>

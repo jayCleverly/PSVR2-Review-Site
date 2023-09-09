@@ -7,6 +7,20 @@ import { UserModel } from "../models/Users.js";
 const router = express.Router();
 
 
+// checks to see if user is already logged in before allowing them to authenticate
+router.get("/auth-check", async (req, res) => {
+
+    var loggedIn = false;
+
+    // user is already logged in
+    if (req.user != undefined) {
+        loggedIn = true;
+    }
+
+    res.json({loggedIn, "user": req.user});
+})
+
+
 // login to account
 router.post("/login", async (req, res) => {
 

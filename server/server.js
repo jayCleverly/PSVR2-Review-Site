@@ -21,7 +21,7 @@ app.use(cors({
 
 // sets up routes to use
 app.use("/", homeRouter);
-app.use("/authenticate", authRouter);
+app.use("/authenticate", cookieJwtAuth, authRouter);
 app.use("/profile", cookieJwtAuth, profileRouter);
 
 // connects to database

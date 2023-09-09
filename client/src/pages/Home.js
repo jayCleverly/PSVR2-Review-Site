@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import MainLayout from '../layout/MainLayout';
@@ -13,12 +13,12 @@ function Home() {
   const [reviews, setReviews] = useState([]);
   const [genre, setGenre] = useState("all");
 
+  
   // api request to load in reviews
   useEffect(() => {
     axios.get("http://localhost:3001/").then((response) => {
-      setReviews(response.data.reviews);
+      setReviews(response.data.reviews); // loads reviews
       setGenre(response.data.genre); // gets genre user had chosen
-      document.getElementById("genreChoice").value = response.data.genre; // sets default value to chosen genre
     })
   }, [])
 
@@ -35,7 +35,7 @@ function Home() {
         <div className="home-filter">
           <div>
             <h2>Choose a genre to view reviews for:</h2>
-            <select id="genreChoice" onChange={(event) => {filter(event.target.value)}}>
+            <select id="genreChoice" onChange={(event) => {filter(event.target.value)}} value={genre}>
               <option value="all">All</option>
               <option value="racing">Racing</option>
               <option value="shooter">Shooter</option>

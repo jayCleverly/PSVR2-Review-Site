@@ -9,15 +9,15 @@ const router = express.Router();
 router.get("/", async (req, res) => {
     
     var reviewGenre = req.cookies.reviewGenre; // game genre the user wants to view reviews for
-
     var reviews = [];
+    
     // the user has asked to see specific reviews
     if (reviewGenre != null && reviewGenre != "all") {
-        reviews = await ReviewModel.find({"genre": reviewGenre}).sort({date: -1});;
+        reviews = await ReviewModel.find({"genre": reviewGenre}).sort({date: -1});
 
     // the user has not asked to see specific reviews
     } else if (reviewGenre == null || reviewGenre == "all") {
-        reviews = await ReviewModel.find({}).sort({date: -1});;
+        reviews = await ReviewModel.find({}).sort({date: -1});
         if (reviewGenre != "all") { reviewGenre = "all" }; // makes sure genre is set to a value
     }
 
