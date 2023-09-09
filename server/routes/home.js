@@ -8,7 +8,7 @@ const router = express.Router();
 // view a selection of reviews
 router.get("/", async (req, res) => {
     
-    const reviewGenre = req.cookies.reviewGenre; // game genre the user wants to view reviews for
+    var reviewGenre = req.cookies.reviewGenre; // game genre the user wants to view reviews for
 
     var reviews = [];
     // the user has asked to see specific reviews

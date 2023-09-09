@@ -18,13 +18,13 @@ router.get("/view/:userId", async (req, res) => {
         // finds all reviews selected user has created
         userReviews = await ReviewModel.find(
             {"authorId": req.params.userId}
-        );
+        ).catch((error) => {});
+        
         // finds user associated with reviews
         author = await UserModel.findOne(
             {"_id": req.params.userId}
-        );
+        ).catch((error) => {});        
     }
-
     // sends these reviews to frontend
     res.json({"reviews": userReviews, "currentUser": req.user, "author": author});
 })

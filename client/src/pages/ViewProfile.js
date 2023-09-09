@@ -21,9 +21,18 @@ function ViewProfile() {
 
           // user is logged in
           if (response.data.currentUser != undefined) {
-            setCurrentUser(response.data.currentUser);
-            setAuthor(response.data.author);
-            setReviews(response.data.reviews);
+
+            // profile does exist
+            if (response.data.author != undefined) {
+              setCurrentUser(response.data.currentUser);
+              setAuthor(response.data.author);
+              setReviews(response.data.reviews);
+
+            // profile does not exist
+            } else {
+              alert("PROFILE DOES NOT EXIST");
+              window.location.href = "http://localhost:3000/";
+            }
 
           // user is not logged in
           } else {
@@ -61,7 +70,7 @@ function ViewProfile() {
     return (
         <MainLayout>
           
-          {currentUser.id != undefined && // makes sure user is logged in
+          {(currentUser.id != undefined && author != undefined) ? // makes sure user is logged in and profile exists
             <>
               <div>
                 {currentUser.id == author._id && // user and author are the same
@@ -99,6 +108,7 @@ function ViewProfile() {
                 </div>
               }
             </>
+            : null
           }
 
         </MainLayout>
