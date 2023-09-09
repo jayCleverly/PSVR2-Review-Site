@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 
 import Home from './pages/Home';
 import ViewReview from './pages/ViewReview';
@@ -9,6 +9,7 @@ import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import ViewProfile from './pages/ViewProfile';
 import CreateReview from './pages/CreateReview';
+import PageNotFound from './pages/PageNotFound'
 
 
 // creates routes for the website
@@ -36,6 +37,14 @@ const router = createBrowserRouter([
   {
     path: "/profile/create-review",
     element: <CreateReview/>,
+  },
+  {
+    path: "/404",
+    element: <PageNotFound/>,
+  },
+  {
+    path: "*",
+    element: <Navigate to={"/404"}/>,
   },
 ]);
 
