@@ -1,0 +1,41 @@
+/* General styling for all pages*/
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+.flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.container{
+    max-width: 1100px;
+    margin: auto;
+    overflow: auto;
+    padding: 0, 40px;
+}
+
+
+/* Navbar specific styling */
+.navbar {
+    justify-content:left;
+    background-color: darkblue;
+    color: #FFF;
+    height: 60px;
+}
+.navbar h1 {
+    color: #FFF;
+    font-weight: 500;
+}
+.navbar ul {
+    margin-top: 6px;
+    margin-left: 40px;
+    display: flex;
+    list-style-type: none;
+}
+.navbar a {
+    color: #FFF;
+    margin-left: 10px;
+}

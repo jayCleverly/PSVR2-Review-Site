@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
+import "../style/ViewProfile.css";
 
 
 // front end allowing users to view other user's profiles, reviews / users must be logged in
@@ -51,19 +52,29 @@ function ViewProfile() {
           
           {author._id != undefined && // makes sure profile exists
             <>
-              <div>
+              <div class="profile">
                 <br></br>
                 <h1><u>{author.username}'s Reviews</u></h1>
                 <br></br>
 
-                <div className="reviews">
+                {currentUser != undefined && currentUser.id == author._id && // checks to see if user logged in and author are same
+                  <div>
+                    <h2><Link to={"/profile/create-review"}>Create Review</Link></h2>
+                  </div>
+                }
+
+                <hr></hr>
+
+                <div>
+                    <br></br>
                     {reviews.map((review) => {
                       return (
-                        <div>
-                          <h1><Link to={"/view/" + review._id}>{review.title}</Link>, {review.date}</h1>
-                          <h1>{review.game}, Rating: {review.rating} / 5</h1>
+                        <div class="review">
+                          <h2><Link to={"/view/" + review._id}>{review.title}</Link></h2>
+                          <h2>Author: <Link to={"/profile/view/" + review.authorId}>{review.author}</Link></h2>
+                          <h2>Game: {review.game}, Rating: {review.rating} / 5</h2>
                           
-                          { currentUser != undefined && currentUser.id == author._id && // checks to see if user logged in and author are same
+                          {currentUser != undefined && currentUser.id == author._id && // checks to see if user logged in and author are same
                             <button onClick={() => deleteReview(review._id)}>Delete</button>
                           }
                           <br></br>
@@ -72,14 +83,6 @@ function ViewProfile() {
                     })}
                 </div>
               </div>
-
-              {currentUser != undefined && currentUser.id == author._id && // checks to see if user logged in and author are same
-                <div>
-                  <br></br>
-                  <br></br>
-                  <Link to={"/profile/create-review"}>Create Review</Link>
-                </div>
-              }
             </>
           }
 

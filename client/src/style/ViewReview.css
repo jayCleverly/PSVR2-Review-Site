@@ -1,0 +1,17 @@
+.view-review {
+    background-color: white;
+    margin: 10px;
+}
+.view-review h1 {
+    margin-bottom: 20px;
+}
+.view-review h2 {
+    padding: 5px;
+}
+.view-review p {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: large;
+}

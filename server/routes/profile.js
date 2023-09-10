@@ -17,7 +17,7 @@ router.get("/view/:userId", async (req, res) => {
     // finds all reviews selected user has created
     const userReviews = await ReviewModel.find(
         {"authorId": req.params.userId}
-    ).catch((error) => {});
+    ).sort({date: -1}).catch((error) => {});
 
     // sends these reviews to frontend
     res.json({"reviews": userReviews, "currentUser": req.user, "author": author});

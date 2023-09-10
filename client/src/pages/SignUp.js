@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import MainLayout from "../layout/MainLayout";
+import "../style/Auth.css"
 
 
 // the front end allowing users to sign up
@@ -43,18 +44,19 @@ function SignUp() {
 
     return (
         <MainLayout>
+          <h1>Create an account:</h1>
+          <hr></hr>
           {!loggedIn &&
-            <>
+            <div class="auth">
               <input type="text" placeholder="Username.." 
-                onChange={(event) => setUsername(event.target.value)} required></input>
+                onChange={(event) => setUsername(event.target.value)}></input>
               <input type="text" placeholder="Email.." 
-                onChange={(event) => setEmail(event.target.value)} required></input>
-              <input type="text" placeholder="Password.." 
-                onChange={(event) => setPassword(event.target.value)} required></input>
+                onChange={(event) => setEmail(event.target.value)}></input>
+              <input type="password" placeholder="Password.." 
+                onChange={(event) => setPassword(event.target.value)}></input>
               <button onClick={() => signUp()}>Sign Up</button>
-            </>
+            </div>
           }
-          
         </MainLayout>
     );
 }

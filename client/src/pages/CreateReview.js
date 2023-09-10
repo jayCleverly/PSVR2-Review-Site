@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import MainLayout from "../layout/MainLayout";
+import "../style/CreateReview.css"
 
 
 // the front end side to create a review and store in the database
@@ -46,17 +47,21 @@ function CreateReview() {
 
     return (
         <MainLayout>
+          <h1>Create a review:</h1>
+          <hr></hr>
           {loggedIn && // make sure user is logged in before allowing them to create a review
-            <>
+            <div class="create-review">
+          
               <input type="text" placeholder="Title.." 
               onChange={(event) => setTitle(event.target.value)} required></input>
 
+              <br></br> 
               <input type="text" placeholder="Game.." 
               onChange={(event) => setGame(event.target.value)} required></input>
 
-              <label for="genreChoice">Genre</label>
-              <select id="genreChoice"  onChange={(event) => {setGenre(event.target.value)}}>
-                <option value="all">All</option>
+              <br></br>
+              <select class="genre-choice" id="genreChoice" onChange={(event) => {setGenre(event.target.value)}}>
+                <option value="" disabled selected>Genre..</option>
                 <option value="racing">Racing</option>
                 <option value="shooter">Shooter</option>
                 <option value="sports">Sports</option>
@@ -65,16 +70,19 @@ function CreateReview() {
                 <option value="action">Action</option>
                 <option value="casual">Casual</option>
                 <option value="role-play">Role Play</option>
-                </select>
+              </select>
 
-              <input type="number" placeholder="Rating.. / 5" min={1} max={5}
+              <br></br>
+              <input type="number" placeholder="Rating / 5.." min={1} max={5}
               onChange={(event) => setRating(event.target.value)} required></input>
 
-              <input type="text" placeholder="Text.." 
-              onChange={(event) => setText(event.target.value)} required></input>
+              <br></br>
+              <textarea type="text" rows="9" placeholder="Review.." 
+              onChange={(event) => setText(event.target.value)} required></textarea>
 
+              <br></br>
               <button onClick={createReview}>Create</button>
-            </>
+            </div>
           }
         </MainLayout>
     );

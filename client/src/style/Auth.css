@@ -1,0 +1,9 @@
+.auth {
+    background-color: white;
+    margin-top: 30px;
+    padding: 30px;
+}
+.auth input, button {
+    font-size: large;
+    padding: 10px;
+}

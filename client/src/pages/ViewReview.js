@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
+import "../style/ViewReview.css"
 
 
 // allows users to read a chosen review
@@ -32,11 +33,11 @@ function ViewReview() {
     return (
         <MainLayout>
           {typeof(review.title) == "string" && // checks that loaded review is not empty object
-            <div>
+            <div class="view-review">
               <br></br>
               <h1><u>{review.title}</u></h1>
-              <h1>Author: <Link to={"/profile/view/" + review.authorId}>{review.author}</Link>, {review.date}</h1>
-              <h1>{review.game}, Rating: {review.rating} / 5</h1>
+              <h2>Author: <Link to={"/profile/view/" + review.authorId}>{review.author}</Link>, {review.date.split("T")[0]}</h2>
+              <h2>Game: {review.game}, Rating: {review.rating} / 5</h2>
               <p>{review.text}</p>
               <br></br>
             </div>

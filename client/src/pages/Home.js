@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import MainLayout from '../layout/MainLayout';
+import "../style/Home.css";
+
 
 axios.defaults.withCredentials = true; // allows cookies to be stored
 
@@ -34,8 +36,8 @@ function Home() {
       <MainLayout>
         <div className="home-filter">
           <div>
-            <h2>Choose a genre to view reviews for:</h2>
-            <select id="genreChoice" onChange={(event) => {filter(event.target.value)}} value={genre}>
+            <h1>Choose a genre to view reviews for:</h1>
+            <select class="genre-choice" id="genreChoice" onChange={(event) => {filter(event.target.value)}} value={genre}>
               <option value="all">All</option>
               <option value="racing">Racing</option>
               <option value="shooter">Shooter</option>
@@ -47,24 +49,22 @@ function Home() {
               <option value="role-play">Role Play</option>
             </select>
           </div>
+          <hr></hr>
+        </div>
 
+        <br></br>
+
+        <div className="home-reviews">
           <br></br>
-
-          <div className="home-reviews">
-            <h1>Reviews for {genre} games:</h1>
-            <br></br>
-
-            {reviews.map((review) => {
-              return (
-                <div>
-                  <h1><Link to={"/view/" + review._id}>{review.title}</Link></h1>
-                  <h1>Author: <Link to={"/profile/view/" + review.authorId}>{review.author}</Link>, {review.date}</h1>
-                  <h1>{review.game}, Rating: {review.rating} / 5</h1>
-                  <br></br>
-                </div>
-              );
-            })}
-          </div>
+          {reviews.map((review) => {
+            return (
+              <div class="review">
+                <h2><Link to={"/view/" + review._id}>{review.title}</Link></h2>
+                <h2>Author: <Link to={"/profile/view/" + review.authorId}>{review.author}</Link></h2>
+                <h2>Game: {review.game}, Rating: {review.rating} / 5</h2>
+              </div>
+            );
+          })}
         </div>
       </MainLayout>
 

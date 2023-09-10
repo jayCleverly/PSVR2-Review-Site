@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import "../style/Navbar.css";
 
 
 // a reusable navigation system with links to important parts of the site
@@ -32,29 +33,29 @@ function Navbar() {
 
 
     return (
-        <div className="navbar">
-            <div className="navbar-logo">
-                PSVR2 Game Review
+        <div class="navbar">
+            <div class="container flex">
+                <h1>PSVR2 GAME REVIEWS</h1>
+                <nav>
+                    <ul>
+                        <li><Link to="/">Home</Link></li>
+                        
+                        {!loggedIn && // shows routes for user to login
+                            <>
+                            <li><Link to="/authenticate/login">Login</Link></li>
+                            <li><Link to="/authenticate/sign-up">Sign Up</Link></li>
+                            </>
+                        }
+                        
+                        {loggedIn && // shows routes for user to view their profile
+                            <>
+                            <li><Link to={"/profile/view/" + user.id}>Profile</Link></li>
+                            <li><a href="/" onClick={() => logout()}>Logout</a></li>
+                            </>
+                        }
+                    </ul>
+                </nav>
             </div>
-
-            <ul className="navbar-menu">
-                <li><Link to="/">Home</Link></li>
-
-                {!loggedIn && // shows routes for user to login
-                    <>
-                    <li><Link to="/authenticate/login">Login</Link></li>
-                    <li><Link to="/authenticate/sign-up">Sign Up</Link></li>
-                    </>
-                    
-                }
-                {loggedIn && // shows routes for user to view their profile
-                    <>
-                    <li><Link to={"/profile/view/" + user.id}>Profile</Link></li>
-                    <li><a href="/" onClick={() => logout()}>Logout</a></li>
-                    </>
-                    
-                }
-            </ul>
         </div>
     )
 }
