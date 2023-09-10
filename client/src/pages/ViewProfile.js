@@ -59,7 +59,7 @@ function ViewProfile() {
 
                 {currentUser != undefined && currentUser.id == author._id && // checks to see if user logged in and author are same
                   <div>
-                    <h2><Link to={"/profile/create-review"}>Create Review</Link></h2>
+                    <a href="/profile/create-review"><button >Create Review</button></a>
                   </div>
                 }
 

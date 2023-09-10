@@ -1,20 +1,7 @@
-hr {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    padding: 0;
-    display: block;
-    border: 2px solid darkblue;
-}
-h1 {
-    color: darkblue;
-}
-
 .genre-choice {
     margin-top: 20px;
     width: 80%;
-    height: 30px;
+    height: 40px;
     text-align: center;
     font-size: large;
 } 

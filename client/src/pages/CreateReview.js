@@ -54,12 +54,10 @@ function CreateReview() {
           
               <input type="text" placeholder="Title.." 
               onChange={(event) => setTitle(event.target.value)} required></input>
-
-              <br></br> 
+ 
               <input type="text" placeholder="Game.." 
               onChange={(event) => setGame(event.target.value)} required></input>
 
-              <br></br>
               <select class="genre-choice" id="genreChoice" onChange={(event) => {setGenre(event.target.value)}}>
                 <option value="" disabled selected>Genre..</option>
                 <option value="racing">Racing</option>
@@ -72,15 +70,12 @@ function CreateReview() {
                 <option value="role-play">Role Play</option>
               </select>
 
-              <br></br>
               <input type="number" placeholder="Rating / 5.." min={1} max={5}
               onChange={(event) => setRating(event.target.value)} required></input>
 
-              <br></br>
               <textarea type="text" rows="9" placeholder="Review.." 
               onChange={(event) => setText(event.target.value)} required></textarea>
 
-              <br></br>
               <button onClick={createReview}>Create</button>
             </div>
           }
