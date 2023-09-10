@@ -34,9 +34,10 @@ function Home() {
 
   return (
       <MainLayout>
+        <br></br>
         <div className="home-filter">
           <div>
-            <h1>Choose a genre to view reviews for:</h1>
+            <h1><u>Choose a genre to view reviews for:</u></h1>
             <select class="genre-choice" id="genreChoice" onChange={(event) => {filter(event.target.value)}} value={genre}>
               <option value="all">All</option>
               <option value="racing">Racing</option>

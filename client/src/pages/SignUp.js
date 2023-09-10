@@ -11,6 +11,7 @@ function SignUp() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [bio, setBio] = useState("");
     const [loggedIn, setLoggedIn] = useState(true);
 
 
@@ -32,7 +33,7 @@ function SignUp() {
 
     // api request to run backend logic to create an account
     const signUp = () => {
-        axios.post("http://localhost:3001/authenticate/sign-up", {username, email, password}).then((response) => {
+        axios.post("http://localhost:3001/authenticate/sign-up", {username, email, password, bio}).then((response) => {
           alert(response.data.message);
 
           // account has been created successfully
@@ -54,6 +55,8 @@ function SignUp() {
                 onChange={(event) => setEmail(event.target.value)}></input>
               <input type="password" placeholder="Password.." 
                 onChange={(event) => setPassword(event.target.value)}></input>
+              <textarea type="text" placeholder="Bio.." 
+                onChange={(event) => setBio(event.target.value)}></textarea>
               <button onClick={() => signUp()}>Sign Up</button>
             </div>
           }

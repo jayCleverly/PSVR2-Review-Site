@@ -7,3 +7,8 @@
     font-size: large;
     padding: 10px;
 }
+
+.auth textarea {
+    font-size: x-large;
+    resize: none;
+}

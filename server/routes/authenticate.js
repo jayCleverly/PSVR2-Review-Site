@@ -71,15 +71,13 @@ router.post("/login", async (req, res) => {
 router.post("/sign-up", async (req, res) => {
 
     // gets data entered by user
-    const { username, email, password } = req.body;
-    
+    const { username, email, password, bio } = req.body;
+
     // makes sure user has entered all details
-    if (username != "" && email != "" && password != "") {
+    if (username != "" && email != "" && password != "" && bio != "") {
 
         // makes sure email is valid
         if (emailValidator.validate(email)) {
-
-            console.log(email)
 
             // checks to see if entered details match an existing account
             const userExists = await UserModel.findOne({$or:
@@ -97,10 +95,10 @@ router.post("/sign-up", async (req, res) => {
                 const newUser = new UserModel({
                     username: username,
                     email: email,
-                    password: hashedPassword
+                    password: hashedPassword,
+                    bio: bio
                 });
 
-                console.log(newUser.email)
                 // saves user to database
                 await newUser.save();
 

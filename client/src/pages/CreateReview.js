@@ -70,8 +70,14 @@ function CreateReview() {
                 <option value="role-play">Role Play</option>
               </select>
 
-              <input type="number" placeholder="Rating / 5.." min={1} max={5}
-              onChange={(event) => setRating(event.target.value)} required></input>
+              <select class="genre-choice" id="ratingChoice" onChange={(event) => {setRating(event.target.value)}}>
+                <option value="" disabled selected>Rating..</option>
+                <option value={1}>1 / 5</option>
+                <option value={2}>2 / 5</option>
+                <option value={3}>3 / 5</option>
+                <option value={4}>4 / 5</option>
+                <option value={5}>5 / 5</option>
+              </select>
 
               <textarea type="text" rows="9" placeholder="Review.." 
               onChange={(event) => setText(event.target.value)} required></textarea>

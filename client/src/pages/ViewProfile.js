@@ -54,7 +54,8 @@ function ViewProfile() {
             <>
               <div class="profile">
                 <br></br>
-                <h1><u>{author.username}'s Reviews</u></h1>
+                <h1><u>{author.username}</u></h1>
+                <p>{author.bio}</p>
                 <br></br>
 
                 {currentUser != undefined && currentUser.id == author._id && // checks to see if user logged in and author are same
@@ -71,7 +72,6 @@ function ViewProfile() {
                       return (
                         <div class="review">
                           <h2><Link to={"/view/" + review._id}>{review.title}</Link></h2>
-                          <h2>Author: <Link to={"/profile/view/" + review.authorId}>{review.author}</Link></h2>
                           <h2>Game: {review.game}, Rating: {review.rating} / 5</h2>
                           
                           {currentUser != undefined && currentUser.id == author._id && // checks to see if user logged in and author are same

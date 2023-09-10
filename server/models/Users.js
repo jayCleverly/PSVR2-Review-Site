@@ -16,7 +16,11 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    bio: {
+        type: String,
+        required: true
+    },
 })
 
 // creates a model of blueprint
