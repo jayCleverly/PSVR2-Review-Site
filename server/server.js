@@ -26,7 +26,7 @@ app.use("/profile", cookieJwtAuth, profileRouter);
 
 // connects to database
 mongoose.connect(
-    "mongodb+srv://jaycleverly:LegoMarvel10!@cluster0.4jcac9j.mongodb.net/reviewsite?retryWrites=true&w=majority"
+    "mongodb+srv://<mongodbconnectionlinkhere>"
     );
 
 // starts server
